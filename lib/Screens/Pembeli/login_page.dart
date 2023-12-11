@@ -1,6 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
+import '../../Providers/auth_provider.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -13,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  void _login() {
+  Future<void> _login() async {
     setState(() {
       _isLoading = true;
     });
@@ -23,28 +25,31 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!isValidEmail) {
       setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email is not valid.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
         _isLoading = false;
       });
-      // Tampilkan pesan bahwa email tidak valid atau lakukan tindakan lainnya
-      // Misalnya, menampilkan snackbar dengan pesan kesalahan
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Email is not valid.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
       return;
     }
 
-    // Lanjutkan ke proses autentikasi jika email valid
-    // Simulasi autentikasi (contoh, seharusnya menggunakan metode autentikasi yang sesungguhnya)
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
+    try {
+      await AuthProvider().login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pushNamed(context, '/home');
+        setState(() {
+          _isLoading = false;
+        });
       });
-      Navigator.pushNamed(context, '/login');
-      // Jika tidak berhasil, tampilkan pesan error atau lakukan tindakan lainnya
-    });
+    } catch (e) {
+      setState(() {});
+    }
   }
 
   void _goToRegisterScreen() {

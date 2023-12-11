@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projectppb/Screens/Pembeli/cart_page.dart';
-
 import 'list_produk.dart';
 import 'profile_page.dart';
 import 'transaksi_page.dart';
@@ -14,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   static const List<Widget> _widgetOptions = <Widget>[
     ListProduk(),
     TransaksiPage(),
