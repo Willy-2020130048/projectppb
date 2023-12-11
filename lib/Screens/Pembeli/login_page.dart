@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
   void _goToRegisterScreen() {
     Navigator.pushNamed(context, '/register');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

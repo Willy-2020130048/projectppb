@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:projectppb/Screens/Seller/customer_service_page.dart';
-import 'package:projectppb/Screens/Seller/product_page.dart';
-import 'package:projectppb/Screens/home_page.dart';
-import 'package:projectppb/Screens/register_page.dart';
+import 'package:projectppb/Screens/Pembeli/cart_page.dart';
+import 'package:projectppb/Screens/Pembeli/home_page.dart';
+import 'package:projectppb/Screens/Pembeli/register_page.dart';
+import 'package:provider/provider.dart';
 
+import 'Providers/produk_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ProdukProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

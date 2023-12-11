@@ -57,9 +57,9 @@ class DashboardPage extends StatelessWidget {
     // Isi dengan widget ringkasan penjualan
     return Container(
       padding: const EdgeInsets.all(16.0),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text('Jumlah Produk Terjual: 150'),
           Text('Pendapatan: Rp 500.000'),
           // Tambahan informasi penjualan lainnya

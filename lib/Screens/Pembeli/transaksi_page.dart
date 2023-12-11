@@ -16,28 +16,31 @@ class _TransaksiPageState extends State<TransaksiPage> {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.grey))
-            ),
-            child: const Padding(
-              padding:  EdgeInsets.all(8.0),
-              child:  Column(
+                border: Border(bottom: BorderSide(color: Colors.grey))),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Nama Penjual")),
+                  const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Nama Penjual")),
                   ListTile(
-                    leading: SizedBox(width: 60,),
+                    leading: const SizedBox(
+                      width: 60,
+                    ),
                     title: Column(
-                      children: [
+                      children: const [
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Nama Produk"),),
+                          child: Text("Nama Produk"),
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Harga"),)
+                          child: Text("Harga"),
+                        )
                       ],
                     ),
-                    trailing: Text("Sedang Dikirim"),
+                    trailing: const Text("Sedang Dikirim"),
                   ),
                 ],
               ),
