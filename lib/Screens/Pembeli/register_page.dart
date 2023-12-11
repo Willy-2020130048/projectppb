@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:projectppb/Models/users.dart';
+import '../../Providers/auth_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -33,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  void _registerSeller() {
+  Future<void> _registerSeller() async {
     String name = _nameController.text.trim();
     String address = _addressController.text.trim();
     String phoneNumber = _phoneNumberController.text.trim();
@@ -139,6 +141,22 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Lanjutkan proses registrasi jika semua validasi terpenuhi
     // ...
+    final user = UserData(
+      email: _emailController.text,
+      nama: _nameController.text,
+      alamat: _addressController.text,
+      handphone: _phoneNumberController.text,
+      roles: "Pembeli",
+    );
+
+    try {
+      await AuthProvider().register(
+        user: user,
+        password: _passwordController.text,
+      );
+    } catch (e) {
+      setState(() {});
+    }
   }
 
   bool _isPasswordValid(String password) {
