@@ -3,7 +3,7 @@ import '../Models/produks.dart';
 class RepositoryProduk {
   List<Produk> list = [
     Produk(
-        gambar: 'images/Hutao.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Costume Hu Tao',
         harga: 150000,
         jenis: 'Costume',
@@ -12,7 +12,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/Zerotwo.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Costume Zero Two',
         harga: 100000,
         jenis: 'Costume',
@@ -21,7 +21,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/Gura.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Costume Gura',
         harga: 100000,
         jenis: 'Costume',
@@ -30,7 +30,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/WigKazuha.jpeg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Wig Kazuha',
         harga: 50000,
         jenis: 'Wig',
@@ -39,7 +39,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/WigMaki.jpeg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Wig Maki',
         harga: 50000,
         jenis: 'Wig',
@@ -48,7 +48,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/WigNeonGenesis.jpeg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Wig Neon Genesis',
         harga: 50000,
         jenis: 'Wig',
@@ -57,7 +57,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/AccAOT.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Senjata Sword Gun',
         harga: 65000,
         jenis: 'Acc',
@@ -66,7 +66,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/AccSenjata.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Staff of Homa',
         harga: 65000,
         jenis: 'Acc',
@@ -75,7 +75,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/AccTopi.jpg',
+        gambar: 'images/hiasan1.jpeg',
         nama: 'Topi One Piece',
         harga: 50000,
         jenis: 'Acc',

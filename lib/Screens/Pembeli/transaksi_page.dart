@@ -34,11 +34,19 @@ class _TransaksiPageState extends State<TransaksiPage> {
                       alignment: Alignment.centerLeft,
                       child: Text("Nama Penjual")),
                   ListTile(
-                    leading: const SizedBox(
+                    leading: Container(
                       width: 60,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            "images/elektronik2.jpeg",
+                          ),
+                        ),
+                      ),
                     ),
-                    title: Column(
-                      children: const [
+                    title: const Column(
+                      children: [
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text("Nama Produk"),

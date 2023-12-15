@@ -157,6 +157,8 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       setState(() {});
     }
+    
+    Navigator.of(context).pop();
   }
 
   bool _isPasswordValid(String password) {
@@ -175,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Seller Registration'),
+        title: Text('Registration Page'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

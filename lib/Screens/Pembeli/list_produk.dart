@@ -80,7 +80,7 @@ class _ListProdukState extends State<ListProduk> {
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: AssetImage(
-                                      "asd",
+                                      "images/elektronik2.jpeg",
                                     ),
                                   ),
                                 ),
@@ -112,8 +112,9 @@ class _ListProdukState extends State<ListProduk> {
                           elevation: 4,
                           child: Column(
                             children: [
-                              Container(
-                                height: 80,
+                              Expanded(
+                                flex: 4,
+                                child: Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
@@ -121,10 +122,12 @@ class _ListProdukState extends State<ListProduk> {
                                       _list[index].gambar,
                                     ),
                                   ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 60,
+                              Expanded(
+                                flex: 2,
                                 child: Padding(
                                   padding:
                                       const EdgeInsets.only(left: 16.0),

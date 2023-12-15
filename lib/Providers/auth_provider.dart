@@ -41,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     await _db.collection("Users").add(user.toJson());
     await _auth.createUserWithEmailAndPassword(
-      email: user.email,
+      email: user.email.toLowerCase(),
       password: password,
     );
   }
