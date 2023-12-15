@@ -95,9 +95,13 @@ class _ListProdukState extends State<ListProduk> {
               margin: const EdgeInsets.all(5),
               shadowColor: Colors.blueGrey,
               elevation: 4,
-              child: SizedBox(
+              child: Container(
                 height: 80,
-                child: Image.network('https://picsum.photos/250?image=9'),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage('https://picsum.photos/250?image=9'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ),
           ),
@@ -142,9 +146,7 @@ class _ListProdukState extends State<ListProduk> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: AssetImage(
-                                      _list[index].gambar,
-                                    ),
+                                    image: NetworkImage(_list[index].gambar),
                                   ),
                                 ),
                               ),
