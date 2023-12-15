@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:projectppb/Database/cart_repository.dart';
+import 'package:projectppb/Database/product_repository.dart';
+import 'package:projectppb/Models/products.dart';
 
-import '../../Models/produks.dart';
-import '../../Providers/produk_provider.dart';
+import '../../Models/teks.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -20,241 +23,255 @@ class _CartPageState extends State<CartPage> {
     super.initState();
   }
 
-  int getTotal(List<Produk> produks) {
+  int getTotal(List<Products> produks) {
     int total = 0;
     for (var produk in produks) {
-      total += produk.total;
+      total += produk.harga;
     }
     return total;
   }
 
-  String changeFormat(int input) {
-    String temp = "";
-    var f = NumberFormat("###,###", "en_US");
-    temp = f.format(input);
-    temp = temp.replaceAll(",", ".");
-    temp = "Rp. $temp";
-    return temp;
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future<String> deleteCart(AsyncSnapshot snapshot2) async {
+      return await CartRepository().getDoc(
+          FirebaseAuth.instance.currentUser?.email, snapshot2.data![0].id);
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xFFDC0000),
-        title: const Text(
-          "Cart",
-          style: TextStyle(color: Colors.black87),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(-10.0),
-          child: Container(
-            height: 4,
-            color: const Color(0xFFDC0000).withOpacity(0.2),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: const Color(0xFFDC0000),
+          title: const Text(
+            "Cart",
+            style: TextStyle(color: Colors.black87),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(-10.0),
+            child: Container(
+              height: 4,
+              color: const Color(0xFFDC0000).withOpacity(0.2),
+            ),
           ),
         ),
-      ),
-      body: Consumer<ProdukProvider>(
-        builder: (context, provider, child) {
-          if (provider.produks.isEmpty) {
-            return const Center(
-              child: Text('No Product'),
-            );
-          }
-          return Column(
-            children: <Widget>[
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.black,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Expanded(
-                    flex: 1,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Cart",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 10,
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: provider.produks.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return Container(
-                      height: 120,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0, top: 20.0, right: 8.0, bottom: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage(
-                                        provider.produks[index].gambar),
+        body: Column(
+          children: <Widget>[
+            StreamBuilder(
+                stream: CartRepository()
+                    .getData(FirebaseAuth.instance.currentUser?.email ?? ''),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Text("No Data");
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  return Expanded(
+                    flex: 10,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return StreamBuilder(
+                            stream: ProductRepository()
+                                .getFromId(snapshot.data![index].idProduk),
+                            builder: (context, snapshot2) {
+                              if (!snapshot2.hasData) {
+                                return const Text("No Data");
+                              } else if (snapshot2.hasError) {
+                                return Text(snapshot2.error.toString());
+                              }
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 8.0,
+                                      left: 16.0,
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        snapshot2.data![0].toko,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          provider.produks[index].nama,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                  Container(
+                                    height: 120,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0,
+                                          top: 10.0,
+                                          right: 16.0,
+                                          bottom: 20.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 2,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  fit: BoxFit.fill,
+                                                  image: NetworkImage(snapshot2
+                                                      .data![0].gambar),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          Expanded(
+                                            flex: 5,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        snapshot2.data![0].nama,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "${FormatTeks().changeFormat(snapshot2.data![0].harga)} x ${snapshot.data![index].jumlah}",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                FormatTeks().changeFormat(
+                                                    snapshot2.data![0].harga *
+                                                        snapshot.data![index]
+                                                            .jumlah),
+                                                style: const TextStyle(
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: FutureBuilder(
+                                              future: deleteCart(snapshot2),
+                                              builder: (context, snapshot3) {
+                                                if (snapshot3.hasError) {
+                                                  return const Text("error");
+                                                } else {
+                                                  return IconButton(
+                                                    onPressed: () {
+                                                      FirebaseFirestore.instance
+                                                          .collection("Charts")
+                                                          .doc(snapshot3.data)
+                                                          .delete();
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.remove_circle,
+                                                      color: Colors.red,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "${changeFormat(provider.produks[index].harga)} x ${provider.produks[index].jumlah}",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  changeFormat(provider.produks[index].total),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: IconButton(
-                                onPressed: () {
-                                  provider.produks.removeAt(index);
-                                  setState(() {});
-                                },
-                                icon: const Icon(
-                                  Icons.remove_circle,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                    ),
+                  );
+                }),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.grey, width: 2),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: Colors.grey, width: 2),
+              child: Row(
+                children: <Widget>[
+                  const Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text("changeFormat(getTotal()"),
                     ),
                   ),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(changeFormat(getTotal(provider.produks))),
-                        ),
-                      ),
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 100,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.indigo[800],
-                                padding: const EdgeInsets.all(8.0),
-                              ),
-                              onPressed: () {
-                                provider.produks.clear();
-                                showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: const Text('Purchased'),
-                                    content:
-                                        const Text('Barang berhasil dibeli.'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context, 'OK');
-                                          setState(() {});
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
+                  const Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.indigo[800],
+                            padding: const EdgeInsets.all(8.0),
+                          ),
+                          onPressed: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Purchased'),
+                                content: const Text('Barang berhasil dibeli.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'OK');
+                                      setState(() {});
+                                    },
+                                    child: const Text('OK'),
                                   ),
-                                );
-                              },
-                              child: const Text(
-                                "Checkout",
-                                textAlign: TextAlign.center,
+                                ],
                               ),
-                            ),
+                            );
+                          },
+                          child: const Text(
+                            "Checkout",
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          );
-        },
-      ),
-    );
+            ),
+          ],
+        ));
   }
 }
