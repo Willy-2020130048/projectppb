@@ -26,15 +26,15 @@ class _TransaksiPageState extends State<TransaksiPage> {
           child: Container(
             decoration: const BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.grey))),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const Align(
+                  Align(
                       alignment: Alignment.centerLeft,
                       child: Text("Nama Penjual")),
                   ListTile(
-                    leading: Container(
+                    leading: SizedBox(
                       width: 60,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
@@ -45,7 +45,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                         ),
                       ),
                     ),
-                    title: const Column(
+                    title: Column(
                       children: [
                         Align(
                           alignment: Alignment.centerLeft,
@@ -57,7 +57,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                         )
                       ],
                     ),
-                    trailing: const Text("Sedang Dikirim"),
+                    trailing: Text("Sedang Dikirim"),
                   ),
                 ],
               ),
