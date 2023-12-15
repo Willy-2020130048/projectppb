@@ -3,7 +3,7 @@ import '../Models/produks.dart';
 class RepositoryProduk {
   List<Produk> list = [
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Costume Hu Tao',
         harga: 150000,
