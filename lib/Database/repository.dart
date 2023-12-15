@@ -4,6 +4,7 @@ class RepositoryProduk {
   List<Produk> list = [
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Costume Hu Tao',
         harga: 150000,
         jenis: 'Costume',
@@ -13,6 +14,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Costume Zero Two',
         harga: 100000,
         jenis: 'Costume',
@@ -22,6 +24,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Costume Gura',
         harga: 100000,
         jenis: 'Costume',
@@ -31,6 +34,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Wig Kazuha',
         harga: 50000,
         jenis: 'Wig',
@@ -40,6 +44,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Wig Maki',
         harga: 50000,
         jenis: 'Wig',
@@ -49,6 +54,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Wig Neon Genesis',
         harga: 50000,
         jenis: 'Wig',
@@ -58,6 +64,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Senjata Sword Gun',
         harga: 65000,
         jenis: 'Acc',
@@ -67,6 +74,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Staff of Homa',
         harga: 65000,
         jenis: 'Acc',
@@ -76,6 +84,7 @@ class RepositoryProduk {
         total: 0),
     Produk(
         gambar: 'images/hiasan1.jpeg',
+        toko: 'RokuWear',
         nama: 'Topi One Piece',
         harga: 50000,
         jenis: 'Acc',

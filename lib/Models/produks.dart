@@ -1,5 +1,6 @@
 class Produk {
   String gambar;
+  String toko;
   String nama;
   String jenis;
   int harga;
@@ -9,6 +10,7 @@ class Produk {
 
   Produk({
     required this.gambar,
+    required this.toko,
     required this.nama,
     required this.harga,
     required this.jenis,
@@ -19,6 +21,7 @@ class Produk {
 
   Produk.fromJson(Map<String, dynamic> json)
       : gambar = json['gambar'],
+        toko = json['toko'],
         nama = json['nama'],
         harga = json['harga'],
         jenis = json['jenis'],
@@ -29,6 +32,7 @@ class Produk {
   Map<String, dynamic> toJson() {
     return {
       'gambar': gambar,
+      'toko': toko,
       'nama': nama,
       'harga': harga,
       'jenis': jenis,
