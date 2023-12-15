@@ -3,7 +3,7 @@ import '../Models/produks.dart';
 class RepositoryProduk {
   List<Produk> list = [
     Produk(
-        gambar: 'assets/images/hiasan1.jpeg',
+        gambar: 'hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Costume Hu Tao',
         harga: 150000,
@@ -23,7 +23,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Costume Gura',
         harga: 100000,
@@ -33,7 +33,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Wig Kazuha',
         harga: 50000,
@@ -43,7 +43,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Wig Maki',
         harga: 50000,
@@ -53,7 +53,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Wig Neon Genesis',
         harga: 50000,
@@ -63,7 +63,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Senjata Sword Gun',
         harga: 65000,
@@ -73,7 +73,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Staff of Homa',
         harga: 65000,
@@ -83,7 +83,7 @@ class RepositoryProduk {
         jumlah: 0,
         total: 0),
     Produk(
-        gambar: 'images/hiasan1.jpeg',
+        gambar: 'assets/images/hiasan1.jpeg',
         toko: 'RokuWear',
         nama: 'Topi One Piece',
         harga: 50000,
