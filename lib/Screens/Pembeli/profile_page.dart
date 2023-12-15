@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../Models/users.dart';
@@ -12,28 +13,29 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser?.email);
     return StreamBuilder(
-      stream: getData("dermawanwilly9@gmail.com"),
+      stream: getData(FirebaseAuth.instance.currentUser?.email),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
-        } else {
+        } else if(snapshot.hasData){
           final data = snapshot.data!;
           return Column(
             children: <Widget>[
               Container(
                 width: double.infinity,
                 color: Colors.red,
-                child: Padding(
+                child:  Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    children: const [
-                      CircleAvatar(),
+                    children: [
+                      const CircleAvatar(),
                       Padding(
-                        padding: EdgeInsets.only(left: 16),
+                        padding: const EdgeInsets.only(left: 16),
                         child: Text(
-                          "Nama Profile",
-                          style: TextStyle(
+                          data[0].nama,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -77,12 +79,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    children: const [
+                    children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -102,6 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           );
+        } else {
+          return const Text("No Data");
         }
       },
     );

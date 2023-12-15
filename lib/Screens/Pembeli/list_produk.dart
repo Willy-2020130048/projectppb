@@ -150,6 +150,8 @@ class _ListProdukState extends State<ListProduk> {
                                   image: AssetImage(
                                     _list[index].gambar,
                                   ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
                                 ),
                               ),
                             ),

@@ -36,6 +36,14 @@ class _TransaksiPageState extends State<TransaksiPage> {
                   ListTile(
                     leading: SizedBox(
                       width: 60,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            "images/elektronik2.jpeg",
+                          ),
+                        ),
+                      ),
                     ),
                     title: Column(
                       children: [

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:projectppb/Providers/produk_provider.dart';
 import 'package:projectppb/Screens/Pembeli/home_page.dart';
 import 'package:projectppb/Screens/Pembeli/register_page.dart';
 import 'package:projectppb/auth_guard.dart';
@@ -22,8 +23,11 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider<ProdukProvider>(
+          create: (_) => ProdukProvider(),
+        ),
         Provider<AuthProvider>(
-          create: (_) => AuthProvider(),
+          create: (_) => AuthProvider(),          
         ),
       ],
       child: const MyApp(),
