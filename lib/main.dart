@@ -27,7 +27,7 @@ void main() async {
           create: (_) => ProdukProvider(),
         ),
         Provider<AuthProvider>(
-          create: (_) => AuthProvider(),          
+          create: (_) => AuthProvider(),
         ),
       ],
       child: const MyApp(),

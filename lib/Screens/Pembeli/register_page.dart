@@ -142,13 +142,12 @@ class _RegisterPageState extends State<RegisterPage> {
     // Lanjutkan proses registrasi jika semua validasi terpenuhi
     // ...
     final user = UserData(
-      email: _emailController.text,
+      email: _emailController.text.toLowerCase(),
       nama: _nameController.text,
       alamat: _addressController.text,
       handphone: _phoneNumberController.text,
       roles: "Pembeli",
     );
-
     try {
       await AuthProvider().register(
         user: user,
@@ -157,8 +156,10 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       setState(() {});
     }
-    
-    Navigator.of(context).pop();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushNamed(context, '/');
+    });
   }
 
   bool _isPasswordValid(String password) {

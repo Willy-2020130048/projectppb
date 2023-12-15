@@ -56,32 +56,61 @@ class _DetailProdukState extends State<DetailProduk> {
   }
 
   Widget buildProductDetails() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16, top: 8),
+          child: Text(
             widget.produk.nama,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Harga: ${widget.produk.harga.toString()}',
-            style: const TextStyle(fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16),
+          child: Text(
+            widget.produk.harga.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Jenis: ${widget.produk.jenis}',
-            style: const TextStyle(fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(),
+              bottom: BorderSide(),
+            ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Keterangan: ${widget.produk.keterangan}',
-            style: const TextStyle(fontSize: 18),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+            child: Row(
+              children: [
+                const CircleAvatar(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    widget.produk.toko.toString(),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16),
+          child: Text(
+            widget.produk.keterangan,
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+      ],
     );
   }
 

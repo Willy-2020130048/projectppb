@@ -101,7 +101,7 @@ class _ListProdukState extends State<ListProduk> {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage(
-                      "asd",
+                      "images/elektronik2.jpeg",
                     ),
                   ),
                 ),
@@ -134,7 +134,7 @@ class _ListProdukState extends State<ListProduk> {
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: SizedBox(
-                      height: 200,
+                      height: 160,
                       child: Card(
                         semanticContainer: true,
                         margin: const EdgeInsets.all(5),
@@ -142,42 +142,51 @@ class _ListProdukState extends State<ListProduk> {
                         elevation: 4,
                         child: Column(
                           children: [
-                            Container(
-                              height: 80,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                    _list[index].gambar,
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                      _list[index].gambar,
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 60,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        _list[index].nama,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w700),
+                            Expanded(
+                              flex: 3,
+                              child: SizedBox(
+                                height: 60,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(_list[index].nama,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        _list[index].harga.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            _list[index].harga.toString(),
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

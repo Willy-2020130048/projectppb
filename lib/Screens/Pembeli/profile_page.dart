@@ -13,20 +13,19 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser?.email);
     return StreamBuilder(
       stream: getData(FirebaseAuth.instance.currentUser?.email),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
-        } else if(snapshot.hasData){
+        } else if (snapshot.hasData) {
           final data = snapshot.data!;
           return Column(
             children: <Widget>[
               Container(
                 width: double.infinity,
                 color: Colors.red,
-                child:  Padding(
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
@@ -79,12 +78,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    children: [
+                    children: const [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(

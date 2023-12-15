@@ -20,7 +20,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
-        email: email,
+        email: email.toLowerCase(),
         password: password,
       );
       _user = credential.user;
@@ -41,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     await _db.collection("Users").add(user.toJson());
     await _auth.createUserWithEmailAndPassword(
-      email: user.email.toLowerCase(),
+      email: user.email,
       password: password,
     );
   }
