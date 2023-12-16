@@ -41,6 +41,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: const Color(0xFFDC0000),
+      ),
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthGuard(),

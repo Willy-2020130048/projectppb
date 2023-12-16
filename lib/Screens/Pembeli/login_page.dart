@@ -60,6 +60,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: const Color(0xFFDC0000),
         title: const Text('Login Page'),
       ),
       body: Padding(
@@ -88,12 +90,20 @@ class _LoginPageState extends State<LoginPage> {
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFDC0000),
+                      ),
                       child: const Text('Login'),
                     ),
               const SizedBox(height: 12.0),
               TextButton(
                 onPressed: _goToRegisterScreen,
-                child: const Text('Daftar'),
+                child: const Text(
+                  'Daftar',
+                  style: TextStyle(
+                    color: Color(0xFFDC0000),
+                  ),
+                ),
               ),
             ],
           ),

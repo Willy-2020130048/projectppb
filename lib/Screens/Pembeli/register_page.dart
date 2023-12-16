@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  Future<void> _registerSeller() async {
+  Future<void> _registerSeller(String role) async {
     String name = _nameController.text.trim();
     String address = _addressController.text.trim();
     String phoneNumber = _phoneNumberController.text.trim();
@@ -146,20 +146,44 @@ class _RegisterPageState extends State<RegisterPage> {
       nama: _nameController.text,
       alamat: _addressController.text,
       handphone: _phoneNumberController.text,
-      roles: "Pembeli",
+      roles: role,
     );
     try {
       await AuthProvider().register(
         user: user,
         password: _passwordController.text,
       );
+      Future.delayed(const Duration(seconds: 0), () {
+        _dialogBuilder(context);
+        setState(() {});
+      });
     } catch (e) {
       setState(() {});
     }
+  }
 
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushNamed(context, '/');
-    });
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Berhasil'),
+          content: const Text('Registrasi berhasil dilakukan'),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/');
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   bool _isPasswordValid(String password) {
@@ -177,77 +201,115 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Registration Page'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _addressController,
-              decoration: InputDecoration(
-                labelText: 'Address',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _phoneNumberController,
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-              ),
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              obscureText: _isObscurePassword,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: Icon(_isObscurePassword
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  onPressed: _togglePasswordVisibility,
-                ),
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _confirmPasswordController,
-              obscureText: _isObscureConfirmPassword,
-              decoration: InputDecoration(
-                labelText: 'Confirm Password',
-                suffixIcon: IconButton(
-                  icon: Icon(_isObscureConfirmPassword
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  onPressed: _toggleConfirmPasswordVisibility,
-                ),
-              ),
-            ),
-            SizedBox(height: 24.0),
-            ElevatedButton(
-              onPressed: _registerSeller,
-              child: Text('Register'),
-            ),
-          ],
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: const Color(0xFFDC0000),
+          title: Text('Registration Page'),
         ),
+        body: DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              TabBar(
+                tabs: const [
+                  Tab(
+                    child: Text(
+                      "Pembeli",
+                      style: TextStyle(color: Color(0xFFDC0000)),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Penjual",
+                      style: TextStyle(color: Color(0xFFDC0000)),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    getRegisterForm("Pembeli"),
+                    getRegisterForm("Penjual"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  Widget getRegisterForm(String role) {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: ListView(
+        children: [
+          TextField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: 'Name',
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _addressController,
+            decoration: InputDecoration(
+              labelText: 'Address',
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _phoneNumberController,
+            decoration: InputDecoration(
+              labelText: 'Phone Number',
+            ),
+            keyboardType: TextInputType.phone,
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'Email',
+            ),
+            keyboardType: TextInputType.emailAddress,
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _passwordController,
+            obscureText: _isObscurePassword,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              suffixIcon: IconButton(
+                icon: Icon(_isObscurePassword
+                    ? Icons.visibility
+                    : Icons.visibility_off),
+                onPressed: _togglePasswordVisibility,
+              ),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: _confirmPasswordController,
+            obscureText: _isObscureConfirmPassword,
+            decoration: InputDecoration(
+              labelText: 'Confirm Password',
+              suffixIcon: IconButton(
+                icon: Icon(_isObscureConfirmPassword
+                    ? Icons.visibility
+                    : Icons.visibility_off),
+                onPressed: _toggleConfirmPasswordVisibility,
+              ),
+            ),
+          ),
+          SizedBox(height: 24.0),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFDC0000),
+            ),
+            onPressed: () => _registerSeller(role),
+            child: Text('Register $role'),
+          ),
+        ],
       ),
     );
   }
