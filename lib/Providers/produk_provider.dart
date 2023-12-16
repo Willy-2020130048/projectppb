@@ -30,15 +30,31 @@ class ProdukProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addToCart({
-    required String id,
-    required int jumlah,
-    required String user,
-  }) async {
+  Future<void> addToCart(
+      {required String id,
+      required int jumlah,
+      required String user,
+      required String penjual}) async {
     final Map<String, dynamic> cart = <String, dynamic>{};
     cart['idProduk'] = id;
     cart['jumlah'] = jumlah;
     cart['user'] = user;
+    cart['penjual'] = penjual;
+    cart['status'] = 'Cart';
     await _db.collection("Charts").add(cart);
+  }
+
+  Future<void> addProductList({
+    required Products produk,
+  }) async {
+    final Map<String, dynamic> item = <String, dynamic>{};
+    item['id'] = _db.collection("Users").doc().id;
+    item['toko'] = produk.toko;
+    item['nama'] = produk.nama;
+    item['jenis'] = produk.jenis;
+    item['harga'] = produk.harga;
+    item['keterangan'] = produk.keterangan;
+    item['gambar'] = produk.gambar;
+    await _db.collection("Products").add(item);
   }
 }

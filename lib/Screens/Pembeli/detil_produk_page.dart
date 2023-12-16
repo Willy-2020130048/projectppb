@@ -123,15 +123,36 @@ class _DetailProdukState extends State<DetailProduk> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildQuantitySection(),
-          FloatingActionButton(
+          ElevatedButton(
             onPressed: () {
               ProdukProvider().addToCart(
                 id: widget.produk.id,
+                penjual: widget.produk.toko,
                 jumlah: jumlah,
                 user: FirebaseAuth.instance.currentUser?.email ?? '',
               );
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Cart'),
+                  content: const Text('Barang telah dimasukan ke cart.'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, 'OK');
+                        setState(() {
+                          Navigator.of(context).pop();
+                        });
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
             },
-            backgroundColor: const Color(0xFFDC0000),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFDC0000),
+            ),
             child: const Text("Add To Cart"),
           ),
         ],

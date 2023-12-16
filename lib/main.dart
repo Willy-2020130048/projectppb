@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const AuthGuard(),
         '/register': (context) => const RegisterPage(),
-        '/home': (context) => const HomePage(),
+        '/homepembeli': (context) => const HomePage(),
       },
     );
   }
