@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../Models/users.dart';
+import 'package:projectppb/Database/user_repository.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,7 +12,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: getData(FirebaseAuth.instance.currentUser?.email),
+      stream:
+          UserRepository().getData(FirebaseAuth.instance.currentUser?.email),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text("Error");
@@ -109,11 +108,4 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
-
-  Stream<List<UserData>> getData(String? email) => FirebaseFirestore.instance
-      .collection("Users")
-      .where("email", isEqualTo: email)
-      .snapshots()
-      .map((event) =>
-          event.docs.map((e) => UserData.fromJson(e.data())).toList());
 }

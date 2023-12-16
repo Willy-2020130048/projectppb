@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projectppb/Database/repository.dart';
-import 'package:projectppb/Models/produks.dart';
+import 'package:projectppb/Database/product_repository.dart';
+import '../../Models/teks.dart';
 import 'detil_produk_page.dart';
 
 class ListProduk extends StatefulWidget {
@@ -11,12 +11,8 @@ class ListProduk extends StatefulWidget {
 }
 
 class _ListProdukState extends State<ListProduk> {
-  RepositoryProduk repo = RepositoryProduk();
-  List<Produk> _list = [];
-
   @override
   Widget build(BuildContext context) {
-    _list = repo.list;
     return Column(
       children: <Widget>[
         Container(
@@ -110,88 +106,105 @@ class _ListProdukState extends State<ListProduk> {
           flex: 6,
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
-            child: SizedBox(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 0,
-                ),
-                itemCount: _list.length,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailProduk(produk: _list[index]),
+            child: StreamBuilder(
+              stream: ProductRepository().getData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("Error");
+                } else if (snapshot.hasData) {
+                  final data = snapshot.data!;
+                  return SizedBox(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 0,
+                        crossAxisSpacing: 0,
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      height: 160,
-                      child: Card(
-                        semanticContainer: true,
-                        margin: const EdgeInsets.all(5),
-                        shadowColor: Colors.blueGrey,
-                        elevation: 4,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(_list[index].gambar),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailProduk(produk: data[index]),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: SizedBox(
+                            height: 160,
+                            child: Card(
+                              semanticContainer: true,
+                              margin: const EdgeInsets.all(5),
+                              shadowColor: Colors.blueGrey,
+                              elevation: 4,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Container(
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image:
+                                              NetworkImage(data[index].gambar),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: SizedBox(
+                                      height: 60,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(data[index].nama,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  FormatTeks().changeFormat(
+                                                      data[index].harga),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Expanded(
-                              flex: 3,
-                              child: SizedBox(
-                                height: 60,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(_list[index].nama,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                            _list[index].harga.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  );
+                } else {
+                  return const Text("No Data");
+                }
+              },
             ),
           ),
         ),

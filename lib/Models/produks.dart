@@ -7,6 +7,7 @@ class Produk {
   String keterangan;
   int jumlah;
   int total;
+  String status;
 
   Produk({
     required this.gambar,
@@ -17,6 +18,7 @@ class Produk {
     required this.keterangan,
     required this.jumlah,
     required this.total,
+    required this.status,
   });
 
   Produk.fromJson(Map<String, dynamic> json)
@@ -27,7 +29,8 @@ class Produk {
         jenis = json['jenis'],
         keterangan = json['keterangan'],
         jumlah = json['jumlah'],
-        total = json['total'];
+        total = json['total'],
+        status = json['status'];
 
   Map<String, dynamic> toJson() {
     return {
@@ -38,7 +41,8 @@ class Produk {
       'jenis': jenis,
       'keterangan': keterangan,
       'jumlah': jumlah,
-      'total': total
+      'total': total,
+      'status': status
     };
   }
 }

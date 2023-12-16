@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Models/produks.dart';
+import 'package:projectppb/Models/products.dart';
+import 'package:projectppb/Providers/produk_provider.dart';
 
 class DetailProduk extends StatefulWidget {
-  final Produk produk;
+  final Products produk;
 
   const DetailProduk({super.key, required this.produk});
 
@@ -49,7 +51,7 @@ class _DetailProdukState extends State<DetailProduk> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage(widget.produk.gambar),
+          image: NetworkImage(widget.produk.gambar),
         ),
       ),
     );
@@ -123,10 +125,14 @@ class _DetailProdukState extends State<DetailProduk> {
           buildQuantitySection(),
           FloatingActionButton(
             onPressed: () {
-              // Implementasi logika penambahan ke keranjang dengan jumlah produk sebanyak 'jumlah'
+              ProdukProvider().addToCart(
+                id: widget.produk.id,
+                jumlah: jumlah,
+                user: FirebaseAuth.instance.currentUser?.email ?? '',
+              );
             },
             backgroundColor: const Color(0xFFDC0000),
-            child: const Icon(Icons.add_shopping_cart),
+            child: const Text("Add To Cart"),
           ),
         ],
       ),
