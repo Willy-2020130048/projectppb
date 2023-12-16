@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:projectppb/auth_guard.dart';
 
 import '../../Providers/auth_provider.dart';
 
@@ -41,14 +42,16 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushNamed(context, '/home');
-        setState(() {
-          _isLoading = false;
-        });
+      setState(() {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => const AuthGuard()));
       });
     } catch (e) {
-      setState(() {});
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 

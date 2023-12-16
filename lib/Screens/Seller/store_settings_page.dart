@@ -8,16 +8,19 @@ class StoreSettingsPage extends StatefulWidget {
 }
 
 class _StoreSettingsPageState extends State<StoreSettingsPage> {
-  final String _storeImage = 'assets/store_image.jpg'; // Simpan URL gambar profil toko
+  final String _storeImage =
+      'assets/store_image.jpg'; // Simpan URL gambar profil toko
   String _storeDescription = 'Deskripsi toko'; // Deskripsi singkat toko
   String _storeAddress = 'Alamat toko'; // Alamat toko
 
-  String _paymentMethod = 'Metode pembayaran'; // Metode pembayaran yang diterima
+  String _paymentMethod =
+      'Metode pembayaran'; // Metode pembayaran yang diterima
   String _bankInfo = 'Informasi rekening'; // Informasi rekening
 
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _paymentMethodController = TextEditingController();
+  final TextEditingController _paymentMethodController =
+      TextEditingController();
   final TextEditingController _bankInfoController = TextEditingController();
 
   @override
@@ -41,7 +44,8 @@ class _StoreSettingsPageState extends State<StoreSettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text('Profil Toko', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const Text('Profil Toko',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             CircleAvatar(
               radius: 50,
@@ -58,7 +62,8 @@ class _StoreSettingsPageState extends State<StoreSettingsPage> {
               child: const Text('Edit Profil Toko'),
             ),
             const SizedBox(height: 20),
-            const Text('Pengaturan Pembayaran', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const Text('Pengaturan Pembayaran',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
               controller: _paymentMethodController,
@@ -69,7 +74,8 @@ class _StoreSettingsPageState extends State<StoreSettingsPage> {
             ),
             TextFormField(
               controller: _bankInfoController,
-              decoration: const InputDecoration(labelText: 'Informasi Rekening'),
+              decoration:
+                  const InputDecoration(labelText: 'Informasi Rekening'),
               onChanged: (value) {
                 _bankInfo = value;
               },
@@ -90,11 +96,12 @@ class _StoreSettingsPageState extends State<StoreSettingsPage> {
   void _editStoreProfile(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditStoreProfilePage(
-        storeDescription: _storeDescription,
-        storeAddress: _storeAddress,
-        onProfileUpdated: _updateProfileDetails,
-      )),
+      MaterialPageRoute(
+          builder: (context) => EditStoreProfilePage(
+                storeDescription: _storeDescription,
+                storeAddress: _storeAddress,
+                onProfileUpdated: _updateProfileDetails,
+              )),
     );
   }
 
@@ -117,7 +124,8 @@ class _StoreSettingsPageState extends State<StoreSettingsPage> {
     });
 
     // Tampilkan pesan notifikasi atau perubahan berhasil disimpan
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Perubahan berhasil disimpan')));
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Perubahan berhasil disimpan')));
   }
 }
 
@@ -126,7 +134,8 @@ class EditStoreProfilePage extends StatefulWidget {
   final String storeAddress;
   final Function(String, String) onProfileUpdated;
 
-  const EditStoreProfilePage({super.key, 
+  const EditStoreProfilePage({
+    super.key,
     required this.storeDescription,
     required this.storeAddress,
     required this.onProfileUpdated,

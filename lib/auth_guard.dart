@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projectppb/Models/users.dart';
 import 'package:projectppb/Screens/Pembeli/home_page.dart';
 import 'package:projectppb/Screens/Pembeli/login_page.dart';
+import 'Database/user_repository.dart';
+import 'Screens/Seller/seller_home.dart';
 
 class AuthGuard extends StatelessWidget {
   const AuthGuard({super.key});
@@ -12,7 +15,19 @@ class AuthGuard extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const HomePage();
+          return StreamBuilder<List<UserData>>(
+            stream: UserRepository().getData(snapshot.data!.email),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data![0].roles == "Pembeli") {
+                  return const HomePage();
+                } else {
+                  return const SellerHome();
+                }
+              }
+              return const Text("Loading");
+            },
+          );
         } else {
           return const LoginPage();
         }

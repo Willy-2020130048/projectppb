@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:projectppb/Database/cart_repository.dart';
 import 'package:projectppb/Database/product_repository.dart';
 import 'package:projectppb/Models/products.dart';
@@ -38,6 +37,11 @@ class _CartPageState extends State<CartPage> {
           FirebaseAuth.instance.currentUser?.email, snapshot2.data![0].id);
     }
 
+    Future<void> checkout() async {
+      CartRepository().checkoutCart(FirebaseAuth.instance.currentUser!.email);
+      Navigator.of(context).pop();
+    }
+
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
@@ -46,22 +50,15 @@ class _CartPageState extends State<CartPage> {
             "Cart",
             style: TextStyle(color: Colors.black87),
           ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(-10.0),
-            child: Container(
-              height: 4,
-              color: const Color(0xFFDC0000).withOpacity(0.2),
-            ),
-          ),
         ),
         body: Column(
           children: <Widget>[
             StreamBuilder(
-                stream: CartRepository()
-                    .getData(FirebaseAuth.instance.currentUser?.email ?? ''),
+                stream: CartRepository().getDataCart(
+                    FirebaseAuth.instance.currentUser?.email ?? ''),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const Text("No Data");
+                    return const Center(child: Text("No Data"));
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   }
@@ -213,62 +210,39 @@ class _CartPageState extends State<CartPage> {
                   );
                 }),
             Container(
+              width: double.infinity,
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(color: Colors.grey, width: 2),
                 ),
               ),
-              child: Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text("changeFormat(getTotal()"),
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFDC0000),
+                    padding: const EdgeInsets.all(8.0),
                   ),
-                  const Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.indigo[800],
-                            padding: const EdgeInsets.all(8.0),
+                  onPressed: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Purchased'),
+                        content: const Text('Barang berhasil dibeli.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => checkout(),
+                            child: const Text('OK'),
                           ),
-                          onPressed: () {
-                            showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Purchased'),
-                                content: const Text('Barang berhasil dibeli.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context, 'OK');
-                                      setState(() {});
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            "Checkout",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        ],
                       ),
-                    ),
+                    );
+                  },
+                  child: const Text(
+                    "Checkout",
+                    textAlign: TextAlign.center,
                   ),
-                ],
+                ),
               ),
             ),
           ],

@@ -8,6 +8,14 @@ class ProductRepository {
       .map((event) =>
           event.docs.map((e) => Products.fromJson(e.data())).toList());
 
+  Stream<List<Products>> getDataPenjual(String toko) =>
+      FirebaseFirestore.instance
+          .collection("Products")
+          .where("toko", isEqualTo: toko)
+          .snapshots()
+          .map((event) =>
+              event.docs.map((e) => Products.fromJson(e.data())).toList());
+
   Stream<List<Products>> getFromId(String id) => FirebaseFirestore.instance
       .collection("Products")
       .where("id", isEqualTo: id)

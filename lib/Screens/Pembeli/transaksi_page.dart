@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Models/users.dart';
+import 'package:projectppb/Database/cart_repository.dart';
+
+import '../../Database/product_repository.dart';
 
 class TransaksiPage extends StatefulWidget {
   const TransaksiPage({super.key});
@@ -10,61 +12,74 @@ class TransaksiPage extends StatefulWidget {
 }
 
 class _TransaksiPageState extends State<TransaksiPage> {
-  Stream<List<UserData>> getData(String? email) => FirebaseFirestore.instance
-      .collection("Users")
-      .where("email", isEqualTo: email)
-      .snapshots()
-      .map((event) =>
-          event.docs.map((e) => UserData.fromJson(e.data())).toList());
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey))),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Nama Penjual")),
-                  ListTile(
-                    leading: Container(
-                      width: 60,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage(
-                            "images/elektronik2.jpeg",
+    return StreamBuilder(
+      stream: CartRepository()
+          .getDataTransaksi(FirebaseAuth.instance.currentUser!.email),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text(snapshot.error.toString()));
+        } else if (!snapshot.hasData) {
+          return const Center(child: Text("Loading"));
+        }
+        return Container(
+          decoration: const BoxDecoration(
+              border: Border(bottom: BorderSide(color: Colors.grey))),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) {
+              return StreamBuilder(
+                stream: ProductRepository()
+                    .getFromId(snapshot.data![index].idProduk),
+                builder: (context, snapshot2) {
+                  if (snapshot2.hasError) {
+                    return Text(snapshot2.error.toString());
+                  } else if (!snapshot2.hasData) {
+                    return const Text("Tidak ada transaksi");
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(snapshot2.data![0].toko)),
+                        ListTile(
+                          leading: Container(
+                            width: 60,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(snapshot2.data![0].gambar),
+                              ),
+                            ),
                           ),
+                          title: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(snapshot2.data![0].nama),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child:
+                                    Text(snapshot2.data![0].harga.toString()),
+                              )
+                            ],
+                          ),
+                          trailing: Text(snapshot.data![index].status),
                         ),
-                      ),
-                    ),
-                    title: Column(
-                      children: const [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Nama Produk"),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Harga"),
-                        )
                       ],
                     ),
-                    trailing: const Text("Sedang Dikirim"),
-                  ),
-                ],
-              ),
-            ),
+                  );
+                },
+              );
+            },
           ),
-        )
-      ],
+        );
+      },
     );
   }
 }

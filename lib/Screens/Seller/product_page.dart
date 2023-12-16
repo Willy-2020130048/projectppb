@@ -1,4 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projectppb/Database/user_repository.dart';
+import 'package:projectppb/Providers/produk_provider.dart';
+
+import '../../Database/product_repository.dart';
+import '../../Models/products.dart';
+import '../../Models/teks.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -8,33 +16,123 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final List<Map<String, dynamic>> _products = []; // List untuk menyimpan produk
-
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
-  final TextEditingController _stokController = TextEditingController();
+  final TextEditingController _jenisController = TextEditingController();
+  final TextEditingController _gambarController = TextEditingController();
   // Anda bisa menambahkan kontroler untuk gambar jika diperlukan
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Daftar Produk'),
-      ),
-      body: ListView.builder(
-        itemCount: _products.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_products[index]['nama']),
-            subtitle: Text('Stok: ${_products[index]['stok']}'),
-            onTap: () {
-              _showEditProductDialog(_products[index], index);
-            },
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: StreamBuilder(
+          stream: UserRepository()
+              .getData(FirebaseAuth.instance.currentUser!.email),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(child: Text("Error"));
+            } else if (!snapshot.hasData) {
+              return const Center(child: Text("Loading"));
+            } else {
+              return StreamBuilder(
+                stream:
+                    ProductRepository().getDataPenjual(snapshot.data![0].nama),
+                builder: (context, snapshot2) {
+                  if (snapshot2.hasError) {
+                    return const Center(child: Text("Error"));
+                  } else if (!snapshot2.hasData) {
+                    return const Center(child: Text("Loading"));
+                  } else {
+                    final data = snapshot2.data;
+                    return SizedBox(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 0,
+                          crossAxisSpacing: 0,
+                        ),
+                        itemCount: data!.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: SizedBox(
+                            height: 160,
+                            child: Card(
+                              semanticContainer: true,
+                              margin: const EdgeInsets.all(5),
+                              shadowColor: Colors.blueGrey,
+                              elevation: 4,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Container(
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image:
+                                              NetworkImage(data[index].gambar),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: SizedBox(
+                                      height: 60,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(data[index].nama,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  FormatTeks().changeFormat(
+                                                      data[index].harga),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFDC0000),
         onPressed: () {
           _showAddProductDialog();
         },
@@ -68,9 +166,17 @@ class _ProductPageState extends State<ProductPage> {
                   decoration: const InputDecoration(labelText: 'Harga'),
                 ),
                 TextFormField(
-                  controller: _stokController,
+                  controller: _jenisController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Stok'),
+                  decoration: const InputDecoration(labelText: 'Jenis'),
+                ),
+                TextFormField(
+                  controller: _gambarController,
+                  decoration: const InputDecoration(
+                    labelText: 'Image URL',
+                    hintText:
+                        "https://imgtr.ee/images/2023/12/15/dc235c410b1289b3b88c34b17b450fb5.jpeg",
+                  ),
                 ),
                 // Widget untuk gambar produk (jika diperlukan)
               ],
@@ -83,12 +189,23 @@ class _ProductPageState extends State<ProductPage> {
               },
               child: const Text('Batal'),
             ),
-            TextButton(
-              onPressed: () {
-                _addProduct();
-                Navigator.pop(context);
+            StreamBuilder(
+              stream: UserRepository()
+                  .getData(FirebaseAuth.instance.currentUser!.email),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else if (!snapshot.hasData) {
+                  return const Center(child: Text("Loading"));
+                } else {
+                  return TextButton(
+                    onPressed: () {
+                      _addProduct(snapshot.data![0].nama);
+                    },
+                    child: const Text('Simpan'),
+                  );
+                }
               },
-              child: const Text('Simpan'),
             ),
           ],
         );
@@ -100,24 +217,18 @@ class _ProductPageState extends State<ProductPage> {
     // Logika untuk menampilkan dialog edit produk
   }
 
-  void _addProduct() {
-    // Logika untuk menambah produk ke dalam list _products
-    String nama = _namaController.text;
-    String deskripsi = _deskripsiController.text;
-    double harga = double.tryParse(_hargaController.text) ?? 0.0;
-    int stok = int.tryParse(_stokController.text) ?? 0;
-
-    Map<String, dynamic> newProduct = {
-      'nama': nama,
-      'deskripsi': deskripsi,
-      'harga': harga,
-      'stok': stok,
-      // Tambahkan properti lain jika diperlukan
-    };
-
-    setState(() {
-      _products.add(newProduct);
-    });
+  void _addProduct(String toko) {
+    Products produk = Products(
+      id: 'id',
+      gambar: _gambarController.text,
+      toko: toko,
+      nama: _namaController.text,
+      harga: int.parse(_hargaController.text),
+      jenis: _jenisController.text,
+      keterangan: _deskripsiController.text,
+    );
+    ProdukProvider().addProductList(produk: produk);
+    setState(() {});
 
     _clearTextFields();
   }
@@ -126,6 +237,7 @@ class _ProductPageState extends State<ProductPage> {
     _namaController.clear();
     _deskripsiController.clear();
     _hargaController.clear();
-    _stokController.clear();
+    _jenisController.clear();
+    _gambarController.clear();
   }
 }
