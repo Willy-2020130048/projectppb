@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectppb/Models/products.dart';
+import 'package:projectppb/Models/teks.dart';
 import 'package:projectppb/Providers/produk_provider.dart';
 
 class DetailProduk extends StatefulWidget {
@@ -72,7 +73,7 @@ class _DetailProdukState extends State<DetailProduk> {
         Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16),
           child: Text(
-            widget.produk.harga.toString(),
+            FormatTeks().changeFormat(widget.produk.harga),
             style: const TextStyle(fontSize: 16),
           ),
         ),

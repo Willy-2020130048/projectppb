@@ -25,7 +25,9 @@ class AuthGuard extends StatelessWidget {
                   return const SellerHome();
                 }
               }
-              return const Text("Loading");
+              return Container(
+                  color: Colors.white60,
+                  child: const Center(child: Text("Loading")));
             },
           );
         } else {
