@@ -27,8 +27,9 @@ class _ListProdukState extends State<ListProduk> {
               elevation: 4,
               child: Container(
                 height: 80,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  image: const DecorationImage(
                       image: NetworkImage('https://picsum.photos/250?image=9'),
                       fit: BoxFit.fill),
                 ),
@@ -82,6 +83,8 @@ class _ListProdukState extends State<ListProduk> {
                                     child: Container(
                                       height: 80,
                                       decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                         image: DecorationImage(
                                           fit: BoxFit.fill,
                                           image:
