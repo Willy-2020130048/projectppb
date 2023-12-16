@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectppb/Database/cart_repository.dart';
+import 'package:projectppb/Models/teks.dart';
 
 import '../../Database/product_repository.dart';
 
@@ -45,7 +46,11 @@ class _TransaksiPageState extends State<TransaksiPage> {
                       children: [
                         Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(snapshot2.data![0].toko)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, bottom: 8.0),
+                              child: Text(snapshot2.data![0].toko),
+                            )),
                         ListTile(
                           leading: Container(
                             width: 60,
@@ -60,12 +65,16 @@ class _TransaksiPageState extends State<TransaksiPage> {
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(snapshot2.data![0].nama),
+                                child: Text(
+                                  snapshot2.data![0].nama,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child:
-                                    Text(snapshot2.data![0].harga.toString()),
+                                child: Text(FormatTeks()
+                                    .changeFormat(snapshot2.data![0].harga)),
                               )
                             ],
                           ),

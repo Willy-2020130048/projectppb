@@ -136,6 +136,9 @@ class _CartPageState extends State<CartPage> {
                                                       alignment:
                                                           Alignment.topLeft,
                                                       child: Text(
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         snapshot2.data![0].nama,
                                                         style: const TextStyle(
                                                           fontSize: 16,

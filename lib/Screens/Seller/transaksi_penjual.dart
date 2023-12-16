@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectppb/Database/cart_repository.dart';
+import 'package:projectppb/Models/teks.dart';
 
 import '../../Database/product_repository.dart';
 import '../../Database/user_repository.dart';
@@ -57,7 +58,13 @@ class _TransaksiPenjualState extends State<TransaksiPenjual> {
                                 children: [
                                   Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text(snapshot3.data![0].toko)),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16.0),
+                                        child: Text(
+                                          snapshot3.data![0].toko,
+                                        ),
+                                      )),
                                   ListTile(
                                     leading: Container(
                                       width: 60,
@@ -73,12 +80,16 @@ class _TransaksiPenjualState extends State<TransaksiPenjual> {
                                       children: [
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(snapshot3.data![0].nama),
+                                          child: Text(
+                                            snapshot3.data![0].nama,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(snapshot3.data![0].harga
-                                              .toString()),
+                                          child: Text(FormatTeks().changeFormat(
+                                              snapshot3.data![0].harga)),
                                         )
                                       ],
                                     ),

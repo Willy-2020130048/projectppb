@@ -72,6 +72,8 @@ class _ProductPageState extends State<ProductPage> {
                                     child: Container(
                                       height: 80,
                                       decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(4.0)),
                                         image: DecorationImage(
                                           fit: BoxFit.fill,
                                           image:
@@ -167,7 +169,6 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 TextFormField(
                   controller: _jenisController,
-                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: 'Jenis'),
                 ),
                 TextFormField(
