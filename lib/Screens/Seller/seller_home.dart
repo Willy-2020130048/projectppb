@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projectppb/Screens/Seller/product_page.dart';
-import 'package:projectppb/Screens/Seller/transaksi_penjual.dart';
+import 'package:uas_ppb_1/Screens/Seller/product_page.dart';
+import 'package:uas_ppb_1/Screens/Seller/transaksi_penjual.dart';
 
 import '../Pembeli/profile_page.dart';
 

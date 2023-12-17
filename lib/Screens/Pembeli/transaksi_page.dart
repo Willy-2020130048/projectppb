@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Database/cart_repository.dart';
-import 'package:projectppb/Models/teks.dart';
+import 'package:uas_ppb_1/Database/cart_repository.dart';
+import 'package:uas_ppb_1/Models/teks.dart';
 
 import '../../Database/product_repository.dart';
 

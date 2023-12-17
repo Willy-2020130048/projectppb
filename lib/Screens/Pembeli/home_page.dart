@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectppb/Screens/Pembeli/cart_page.dart';
+import 'package:uas_ppb_1/Screens/Pembeli/cart_page.dart';
 import 'list_produk.dart';
 import 'profile_page.dart';
 import 'transaksi_page.dart';
