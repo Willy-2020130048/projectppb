@@ -62,7 +62,7 @@ class _TransaksiPenjualState extends State<TransaksiPenjual> {
                                         padding:
                                             const EdgeInsets.only(left: 16.0),
                                         child: Text(
-                                          snapshot3.data![0].toko,
+                                          snapshot2.data![0].user,
                                         ),
                                       )),
                                   ListTile(
