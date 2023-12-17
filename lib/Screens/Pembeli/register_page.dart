@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:projectppb/Models/users.dart';
+import 'package:uas_ppb_1/Models/users.dart';
 import '../../Providers/auth_provider.dart';
 
 class RegisterPage extends StatefulWidget {

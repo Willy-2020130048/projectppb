@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectppb/Database/product_repository.dart';
+import 'package:uas_ppb_1/Database/product_repository.dart';
 import '../../Models/teks.dart';
 import 'detil_produk_page.dart';
 

@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/auth_guard.dart';
+import 'package:uas_ppb_1/auth_guard.dart';
 
 import '../../Providers/auth_provider.dart';
 

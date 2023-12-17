@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Database/cart_repository.dart';
-import 'package:projectppb/Database/product_repository.dart';
-import 'package:projectppb/Models/products.dart';
+import 'package:uas_ppb_1/Database/cart_repository.dart';
+import 'package:uas_ppb_1/Database/product_repository.dart';
+import 'package:uas_ppb_1/Models/products.dart';
 
 import '../../Models/teks.dart';
 

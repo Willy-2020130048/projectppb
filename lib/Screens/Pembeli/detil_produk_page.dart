@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Models/products.dart';
-import 'package:projectppb/Models/teks.dart';
-import 'package:projectppb/Providers/produk_provider.dart';
+import 'package:uas_ppb_1/Models/products.dart';
+import 'package:uas_ppb_1/Models/teks.dart';
+import 'package:uas_ppb_1/Providers/produk_provider.dart';
 
 class DetailProduk extends StatefulWidget {
   final Products produk;

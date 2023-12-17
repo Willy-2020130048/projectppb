@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projectppb/Models/products.dart';
+import 'package:uas_ppb_1/Models/products.dart';
 
 class ProductRepository {
   Stream<List<Products>> getData() => FirebaseFirestore.instance

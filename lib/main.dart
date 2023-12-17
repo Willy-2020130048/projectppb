@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Providers/produk_provider.dart';
-import 'package:projectppb/Screens/Pembeli/home_page.dart';
-import 'package:projectppb/Screens/Pembeli/register_page.dart';
-import 'package:projectppb/auth_guard.dart';
+import 'package:uas_ppb_1/Providers/produk_provider.dart';
+import 'package:uas_ppb_1/Screens/Pembeli/home_page.dart';
+import 'package:uas_ppb_1/Screens/Pembeli/register_page.dart';
+import 'package:uas_ppb_1/auth_guard.dart';
 import 'package:provider/provider.dart';
 import 'Providers/auth_provider.dart';
 

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projectppb/Database/user_repository.dart';
-import 'package:projectppb/Providers/produk_provider.dart';
+import 'package:uas_ppb_1/Database/user_repository.dart';
+import 'package:uas_ppb_1/Providers/produk_provider.dart';
 
 import '../../Database/product_repository.dart';
 import '../../Models/products.dart';
